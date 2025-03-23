@@ -18,13 +18,17 @@ function Search() {
         }
     };
 
-    const dogSearch = async(ageMin:number, ageMax:number) => {
+    const dogSearch = async(ageMin:number, ageMax:number, breeds:string[]) => {
         try {
-            const res = await fetch('https://frontend-take-home-service.fetch.com/dogs/search?'+new URLSearchParams({
+            let params = new URLSearchParams({
                 'sort': 'breed:asc',
                 'ageMin': ageMin.toString(),
                 'ageMax': ageMax.toString(),
-            }).toString(), {
+            })
+            for (let breed of breeds) {
+                params.append('breeds', breed);
+            }
+            const res = await fetch('https://frontend-take-home-service.fetch.com/dogs/search?'+params.toString(), {
                 method: 'GET',
                 credentials: 'include',
             });
@@ -53,7 +57,7 @@ function Search() {
         }
     };
     
-    useEffect(() => {dogSearch(0,15)}, [])
+    useEffect(() => {dogSearch(0,15,[])}, [])
 
     let cards = [];
     for (let i = 0; i < dogs.length; i++) {      
