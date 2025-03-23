@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import Box from '@mui/material/Box';
 import {Dog, DogCard} from '../components/dogCard'
+import Selectors from '../components/selectors'
 
 function Search() {
     const [dogs, setDogs] = useState<Dog[]>([]);
@@ -17,10 +18,12 @@ function Search() {
         }
     };
 
-    const dogSearch = async() => {
+    const dogSearch = async(ageMin:number, ageMax:number) => {
         try {
             const res = await fetch('https://frontend-take-home-service.fetch.com/dogs/search?'+new URLSearchParams({
-                'sort': 'breed:asc'
+                'sort': 'breed:asc',
+                'ageMin': ageMin.toString(),
+                'ageMax': ageMax.toString(),
             }).toString(), {
                 method: 'GET',
                 credentials: 'include',
@@ -50,7 +53,7 @@ function Search() {
         }
     };
     
-    useEffect(() => {dogSearch()}, [])
+    useEffect(() => {dogSearch(0,15)}, [])
 
     let cards = [];
     for (let i = 0; i < dogs.length; i++) {      
@@ -59,6 +62,9 @@ function Search() {
 
     return (
         <>
+        <Box>
+            <Selectors handleSearch={dogSearch}/>
+        </Box>
         <Box sx={{ minWidth: 275 }}>
             {cards}
         </Box>
