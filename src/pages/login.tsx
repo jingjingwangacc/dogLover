@@ -16,6 +16,7 @@ function Login() {
               'Content-type': 'application/json',
               'Access-Control-Allow-Origin': "*"
             },
+            credentials: 'include',
             body: JSON.stringify({
               name: name,
               email: email
@@ -40,14 +41,12 @@ function Login() {
                 required
                 id="name"
                 label="name"
-                defaultValue="name"
                 onChange={(e) => {setName(e.target.value)}}
             />
             <TextField
                 required
                 id="email"
                 label="Email"
-                defaultValue="email"
                 onChange={(e) => {setEmail(e.target.value)}}
             />
             <Button variant="contained" onClick={handleLogin}>Login</Button>
