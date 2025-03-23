@@ -1,8 +1,9 @@
-import { useEffect } from 'react'
-import reactLogo from '../assets/react.svg'
-import '../App.css'
+import { useState, useEffect } from 'react'
+import Box from '@mui/material/Box';
+import {Dog, DogCard} from '../components/dogCard'
 
 function Search() {
+    const [dogs, setDogs] = useState<Dog[]>([]);
     const loadBreed = async() => {
         try {
             const res = await fetch('https://frontend-take-home-service.fetch.com/dogs/breeds', {
@@ -43,7 +44,7 @@ function Search() {
                 credentials: 'include',
             });
             const data = await res.json();
-            console.log(data);
+            setDogs(data);
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -51,24 +52,16 @@ function Search() {
     
     useEffect(() => {dogSearch()}, [])
 
+    let cards = [];
+    for (let i = 0; i < dogs.length; i++) {      
+        cards.push(<DogCard {...dogs[i]}/>)
+    }
+
     return (
         <>
-
-            <div>
-
-                <a href="https://react.dev" target="_blank">
-                    <img src={reactLogo} className="logo react" alt="React logo" />
-                </a>
-            </div>
-            <h1>Vite + React</h1>
-            <div className="card">
-                <p>
-                    Edit <code>src/App.tsx</code> and save to test HMR
-                </p>
-            </div>
-            <p className="read-the-docs">
-                Click on the Vite and React logos to learn more
-            </p>
+        <Box sx={{ minWidth: 275 }}>
+            {cards}
+        </Box>
         </>
     )
 
