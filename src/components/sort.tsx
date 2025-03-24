@@ -5,11 +5,16 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
-export default function Sort() {
-  const [sort, setSort] = React.useState('');
+export interface SortProps {
+    handleSearch: Function
+    sort: string
+    setSort: Function
+}
+export default function Sort(props:SortProps) {
 
   const handleChange = (event: SelectChangeEvent) => {
-    setSort(event.target.value as string);
+    props.setSort(event.target.value as string);
+    
   };
 
   return (
@@ -19,13 +24,13 @@ export default function Sort() {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={sort}
+          value={props.sort}
           label="Age"
           onChange={handleChange}
         >
-          <MenuItem value={10}>Breed</MenuItem>
-          <MenuItem value={20}>Name</MenuItem>
-          <MenuItem value={30}>Age</MenuItem>
+          <MenuItem value={'breed:asc'}>Breed</MenuItem>
+          <MenuItem value={'name:asc'}>Name</MenuItem>
+          <MenuItem value={'age:asc'}>Age</MenuItem>
         </Select>
       </FormControl>
     </Box>

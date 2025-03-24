@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Box from '@mui/material/Box';
 import {Dog, DogCard} from '../components/dogCard'
 import Selectors from '../components/selectors'
+import Sort from '../components/sort'
 
 function Search() {
     const [dogs, setDogs] = useState<Dog[]>([]);
@@ -65,7 +66,7 @@ function Search() {
         }
     };
     
-    useEffect(() => {dogSearch()}, [])
+    useEffect(() => {dogSearch()}, [sort])
 
     let cards = [];
     for (let i = 0; i < dogs.length; i++) {      
@@ -76,6 +77,9 @@ function Search() {
         <>
         <Box>
             <Selectors handleSearch={dogSearch} age={age} setAge={setAge} breeds={breeds} setBreeds={setBreeds} zipCode={zipCode} setZip={setZip}/>
+        </Box>
+        <Box>
+            <Sort handleSearch={dogSearch} sort={sort} setSort={setSort}/>
         </Box>
         <Box sx={{ minWidth: 275 }}>
             {cards}
