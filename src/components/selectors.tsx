@@ -1,5 +1,6 @@
 import AgeSelector from '../components/ageSelector'
 import BreedSelector from '../components/breedSelector'
+import LocationSelector from '../components/locationSelector'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import * as React from 'react';
@@ -7,20 +8,27 @@ import * as React from 'react';
 
 export interface SelctorProps {
     handleSearch:Function
+    age: number[]
+    setAge: Function
+    breeds: string[]
+    setBreeds: Function
+    zipCode: string
+    setZip: Function
 }
 export default function Selectors(props: SelctorProps) {
-    const [age, setAge] = React.useState<number[]>([0, 15]);
-    const [breeds, setBreeds] = React.useState<string[]>([]);
-
+    
     return (
         <>
         <Box>
-            <BreedSelector breeds={breeds} setBreeds={setBreeds}/>
+            <BreedSelector breeds={props.breeds} setBreeds={props.setBreeds}/>
         </Box>
         <Box>
-            <AgeSelector age={age} setAge={setAge}/>
+            <LocationSelector zipCode={props.zipCode} setZip={props.setZip}/>
         </Box>
-        <Button variant="contained" onClick={() => {props.handleSearch(age[0], age[1], breeds)}}>Search</Button>
+        <Box>
+            <AgeSelector age={props.age} setAge={props.setAge}/>
+        </Box>
+        <Button variant="contained" onClick={() => {props.handleSearch()}}>Search</Button>
 
         </>
     )

@@ -5,29 +5,37 @@ import Selectors from '../components/selectors'
 
 function Search() {
     const [dogs, setDogs] = useState<Dog[]>([]);
-    const loadBreed = async() => {
-        try {
-            const res = await fetch('https://frontend-take-home-service.fetch.com/dogs/breeds', {
-                method: 'GET',
-                credentials: 'include',
-            });
-            const data = await res.json();
-            console.log(data);
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    };
+    const [age, setAge] = useState<number[]>([0, 15]);
+    const [breeds, setBreeds] = useState<string[]>([]);
+    const [zipCode, setZip] = useState<string>('');
+    const [sort, setSort] = useState<string>('breed:asc');
+    // const loadBreed = async() => {
+    //     try {
+    //         const res = await fetch('https://frontend-take-home-service.fetch.com/dogs/breeds', {
+    //             method: 'GET',
+    //             credentials: 'include',
+    //         });
+    //         const data = await res.json();
+    //         console.log(data);
+    //     } catch (error) {
+    //         console.error("Error fetching data:", error);
+    //     }
+    // };
 
-    const dogSearch = async(ageMin:number, ageMax:number, breeds:string[]) => {
+    const dogSearch = async() => {
         try {
             let params = new URLSearchParams({
-                'sort': 'breed:asc',
-                'ageMin': ageMin.toString(),
-                'ageMax': ageMax.toString(),
+                'sort': sort,
+                'ageMin': age[0].toString(),
+                'ageMax': age[1].toString(),
             })
             for (let breed of breeds) {
                 params.append('breeds', breed);
             }
+            if(zipCode.length > 0) {
+                params.append('zipCodes', zipCode);
+            }
+
             const res = await fetch('https://frontend-take-home-service.fetch.com/dogs/search?'+params.toString(), {
                 method: 'GET',
                 credentials: 'include',
@@ -57,7 +65,7 @@ function Search() {
         }
     };
     
-    useEffect(() => {dogSearch(0,15,[])}, [])
+    useEffect(() => {dogSearch()}, [])
 
     let cards = [];
     for (let i = 0; i < dogs.length; i++) {      
@@ -67,7 +75,7 @@ function Search() {
     return (
         <>
         <Box>
-            <Selectors handleSearch={dogSearch}/>
+            <Selectors handleSearch={dogSearch} age={age} setAge={setAge} breeds={breeds} setBreeds={setBreeds} zipCode={zipCode} setZip={setZip}/>
         </Box>
         <Box sx={{ minWidth: 275 }}>
             {cards}
