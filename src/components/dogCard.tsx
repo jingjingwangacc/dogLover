@@ -3,6 +3,8 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 export interface Dog {
     id: string
@@ -11,8 +13,29 @@ export interface Dog {
     age: number
     zip_code: string
     breed: string
+    likedDogs: string[]
+    setLikedDogs: Function
 }
 export function DogCard(props: Dog) {
+    console.log('render ', props.id);
+    const favorite = () => {
+        console.log('calc fav');
+        for (let i = 0; i < props.likedDogs.length; i++) {
+            if (props.likedDogs[i] === props.id) {
+                console.log('found', props.likedDogs[i]);
+               return <FavoriteIcon onClick={() => {
+                    let newLike = [...props.likedDogs];
+                    newLike.splice(i, 1);
+                    props.setLikedDogs(newLike);
+                }}/>
+            }
+        }
+        return (<FavoriteBorderIcon onClick={() => {
+            let newLike = [...props.likedDogs];
+            newLike.push(props.id);
+            props.setLikedDogs(newLike);
+        }}/>)
+    }
 
     return (
         <Card sx={{ maxWidth: 345 }}>
@@ -24,6 +47,7 @@ export function DogCard(props: Dog) {
               alt={props.name}
             />
             <CardContent>
+            {favorite()}
               <Typography gutterBottom variant="h5" component="div">
                 {props.name}
               </Typography>
