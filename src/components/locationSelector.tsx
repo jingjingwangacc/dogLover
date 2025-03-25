@@ -10,7 +10,7 @@ export default function LocationSelector(props:ZipCodeProps) {
   return (
     <Box
       component="form"
-      sx={{ '& > :not(style)': { m: 1, width: '25ch' } }}
+      sx={{width: 200 }}
       noValidate
       autoComplete="off"
     >

@@ -10,7 +10,7 @@ function App() {
     <>
       <Router>
         <Routes> 
-          <Route path='/login' element={<Login />} />
+          <Route path='/' element={<Login />} />
           <Route path='/search' element={<Search />} /> 
           <Route path='/match/:id' element={<Match />} /> 
         </Routes>

@@ -40,7 +40,7 @@ export function DogCard(props: Dog) {
     }
 
     return (
-        <Card sx={{ maxWidth: 345 }}>
+        <Card sx={{ maxWidth: 345, borderRadius: '16px' }}>
             <CardActionArea>
                 <CardMedia
                     component="img"

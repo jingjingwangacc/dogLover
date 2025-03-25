@@ -1,11 +1,35 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
 import Box from '@mui/material/Box';
-import {Dog, DogCard} from '../components/dogCard'
+import { Dog, DogCard } from '../components/dogCard'
 import Selectors from '../components/selectors'
 import Sort from '../components/sort'
 import Button from '@mui/material/Button';
+import styled from "styled-components";
+import Grid from '@mui/material/Grid';
 
+const PageContainer = styled.div`
+    
+color: #FFFFFF;
+width: 100%;
+`;
+
+const MainContainer = styled.div`
+display:flex;
+flex-direction: row;
+`;
+
+const ResultContainer = styled.div`
+display:flex;
+flex-direction: column;
+padding-left: 100px;
+
+`;
+const SortContainer = styled.div`
+display:flex;
+flex-direction: row;
+height: 100px;
+`;
 
 function Search() {
     const navigate = useNavigate();
@@ -28,7 +52,7 @@ function Search() {
     //     }
     // };
 
-    const dogSearch = async() => {
+    const dogSearch = async () => {
         try {
             let params = new URLSearchParams({
                 'sort': sort,
@@ -38,11 +62,11 @@ function Search() {
             for (let breed of breeds) {
                 params.append('breeds', breed);
             }
-            if(zipCode.length > 0) {
+            if (zipCode.length > 0) {
                 params.append('zipCodes', zipCode);
             }
 
-            const res = await fetch('https://frontend-take-home-service.fetch.com/dogs/search?'+params.toString(), {
+            const res = await fetch('https://frontend-take-home-service.fetch.com/dogs/search?' + params.toString(), {
                 method: 'GET',
                 credentials: 'include',
             });
@@ -53,14 +77,14 @@ function Search() {
         }
     };
 
-    const getDogs = async(dogIds: string[]) => {
+    const getDogs = async (dogIds: string[]) => {
         try {
             const res = await fetch('https://frontend-take-home-service.fetch.com/dogs', {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json',
                     'Access-Control-Allow-Origin': "*"
-                  },
+                },
                 body: JSON.stringify(dogIds),
                 credentials: 'include',
             });
@@ -71,7 +95,7 @@ function Search() {
         }
     };
 
-    const matchDog = async() => {
+    const matchDog = async () => {
         try {
             console.log('liked dog', likedDogs);
             const res = await fetch('https://frontend-take-home-service.fetch.com/dogs/match', {
@@ -79,42 +103,59 @@ function Search() {
                 headers: {
                     'Content-type': 'application/json',
                     'Access-Control-Allow-Origin': "*"
-                  },
+                },
                 body: JSON.stringify(likedDogs),
                 credentials: 'include',
             });
             const data = await res.json();
             console.log('match dog:', data);
             navigate('/match/' + data.match);
-            
+
         } catch (error) {
             console.error("Error fetching data:", error);
         }
     };
-    
-    useEffect(() => {dogSearch()}, [sort])
+
+    useEffect(() => { dogSearch() }, [sort])
 
     let cards = [];
-    for (let i = 0; i < dogs.length; i++) {     
-        let prop = {...dogs[i]};
+    for (let i = 0; i < dogs.length; i++) {
+        let prop = { ...dogs[i] };
         prop.likedDogs = likedDogs;
-        prop.setLikedDogs = setLikedDogs 
-        cards.push(<DogCard {...prop}/>)
+        prop.setLikedDogs = setLikedDogs
+        cards.push(
+            <Grid item xs={3}>
+                <DogCard {...prop} />
+            </Grid>
+        )
     }
+
+
+
 
     return (
         <>
-        <Button variant="contained" onClick={matchDog}>Match my dog!</Button>
-        <Box>
-            <Selectors handleSearch={dogSearch} age={age} setAge={setAge} breeds={breeds} setBreeds={setBreeds} zipCode={zipCode} setZip={setZip}/>
-        </Box>
-        <Box>
-            <Sort handleSearch={dogSearch} sort={sort} setSort={setSort}/>
-        </Box>
-        <Box sx={{ minWidth: 275 }}>
-            {cards}
-        </Box>
-        
+            <PageContainer>
+                <MainContainer>
+                    <Box>
+                        <Selectors handleSearch={dogSearch} age={age} setAge={setAge} breeds={breeds} setBreeds={setBreeds} zipCode={zipCode} setZip={setZip} />
+                    </Box>
+                    <ResultContainer>
+                        <SortContainer>
+                            <Button variant="contained" onClick={matchDog}>Match my dog!</Button>
+                            <Box>
+                                <Sort handleSearch={dogSearch} sort={sort} setSort={setSort} />
+                            </Box>
+                        </SortContainer>
+                        <Box sx={{ minWidth: 275 }}>
+                            <Grid container spacing={2}>
+                                {cards}
+                            </Grid>
+                        </Box>
+                    </ResultContainer>
+                </MainContainer>
+            </PageContainer>
+
         </>
     )
 

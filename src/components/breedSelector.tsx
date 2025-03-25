@@ -25,7 +25,7 @@ export default function BreedSelector(props: BreedsProps) {
     React.useEffect(() => {loadBreed()}, [])
 
     return (
-        <Stack spacing={3} sx={{ width: 500 }}>
+        <Stack spacing={3} sx={{ width: 200 }}>
             <Autocomplete
                 multiple
                 id="tags-outlined"
