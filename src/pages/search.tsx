@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from "react-router-dom";
 import Box from '@mui/material/Box';
 import {Dog, DogCard} from '../components/dogCard'
 import Selectors from '../components/selectors'
@@ -7,6 +8,7 @@ import Button from '@mui/material/Button';
 
 
 function Search() {
+    const navigate = useNavigate();
     const [dogs, setDogs] = useState<Dog[]>([]);
     const [age, setAge] = useState<number[]>([0, 15]);
     const [breeds, setBreeds] = useState<string[]>([]);
@@ -83,6 +85,7 @@ function Search() {
             });
             const data = await res.json();
             console.log('match dog:', data);
+            navigate('/match/' + data.match);
             
         } catch (error) {
             console.error("Error fetching data:", error);

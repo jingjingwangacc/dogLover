@@ -14,56 +14,58 @@ export interface Dog {
     zip_code: string
     breed: string
     likedDogs: string[]
-    setLikedDogs: Function
+    setLikedDogs: Function | null
 }
 export function DogCard(props: Dog) {
     console.log('render ', props.id);
     const favorite = () => {
         console.log('calc fav');
-        for (let i = 0; i < props.likedDogs.length; i++) {
-            if (props.likedDogs[i] === props.id) {
-                console.log('found', props.likedDogs[i]);
-               return <FavoriteIcon onClick={() => {
-                    let newLike = [...props.likedDogs];
-                    newLike.splice(i, 1);
-                    props.setLikedDogs(newLike);
-                }}/>
+        if (props.setLikedDogs !== null) {
+            for (let i = 0; i < props.likedDogs.length; i++) {
+                if (props.likedDogs[i] === props.id) {
+                    console.log('found', props.likedDogs[i]);
+                    return <FavoriteIcon onClick={() => {
+                        let newLike = [...props.likedDogs];
+                        newLike.splice(i, 1);
+                        (props.setLikedDogs as Function)(newLike);
+                    }} />
+                }
             }
-        }
-        return (<FavoriteBorderIcon onClick={() => {
-            let newLike = [...props.likedDogs];
-            newLike.push(props.id);
-            props.setLikedDogs(newLike);
-        }}/>)
+            return (<FavoriteBorderIcon onClick={() => {
+                let newLike = [...props.likedDogs];
+                newLike.push(props.id);
+                (props.setLikedDogs as Function)(newLike);
+            }} />)
+        } else return <></>
     }
 
     return (
         <Card sx={{ maxWidth: 345 }}>
-          <CardActionArea>
-            <CardMedia
-              component="img"
-              height="140"
-              image={props.img}
-              alt={props.name}
-            />
-            <CardContent>
-            {favorite()}
-              <Typography gutterBottom variant="h5" component="div">
-                {props.name}
-              </Typography>
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                {'age: ' + props.age}
-              </Typography>
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                {'location: ' + props.zip_code}
-              </Typography>
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                {'breed: ' + props.breed}
-              </Typography>
-            </CardContent>
-          </CardActionArea>
+            <CardActionArea>
+                <CardMedia
+                    component="img"
+                    height="140"
+                    image={props.img}
+                    alt={props.name}
+                />
+                <CardContent>
+                    {favorite()}
+                    <Typography gutterBottom variant="h5" component="div">
+                        {props.name}
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                        {'age: ' + props.age}
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                        {'location: ' + props.zip_code}
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                        {'breed: ' + props.breed}
+                    </Typography>
+                </CardContent>
+            </CardActionArea>
         </Card>
-      );
+    );
 
 }
 
