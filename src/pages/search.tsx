@@ -9,26 +9,34 @@ import styled from "styled-components";
 import Grid from '@mui/material/Grid';
 
 const PageContainer = styled.div`
-    
-color: #FFFFFF;
-width: 100%;
+display: flex;
+padding: 50px;
+background-color:rgba(236, 236, 236, 0.3);
+width: 100vw;
+box-sizing: border-box;
 `;
 
 const MainContainer = styled.div`
 display:flex;
 flex-direction: row;
+width: 100%;
 `;
 
 const ResultContainer = styled.div`
 display:flex;
 flex-direction: column;
-padding-left: 100px;
+width: 70%
 
 `;
 const SortContainer = styled.div`
 display:flex;
 flex-direction: row;
+justify-content: space-between;
 height: 100px;
+width: 100%;
+margin-bottom: 50px;
+align-items: center;
+
 `;
 
 function Search() {
@@ -137,12 +145,13 @@ function Search() {
         <>
             <PageContainer>
                 <MainContainer>
-                    <Box>
+                    <Box sx={{width: '30%', paddingRight: '60px', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                         <Selectors handleSearch={dogSearch} age={age} setAge={setAge} breeds={breeds} setBreeds={setBreeds} zipCode={zipCode} setZip={setZip} />
                     </Box>
                     <ResultContainer>
                         <SortContainer>
-                            <Button variant="contained" onClick={matchDog}>Match my dog!</Button>
+                            <Box></Box>
+                            <Button variant="contained" sx ={{height: '60px', width: '200px', borderRadius: '30px', color: 'white'}} onClick={matchDog}>Match my dog!</Button>
                             <Box>
                                 <Sort handleSearch={dogSearch} sort={sort} setSort={setSort} />
                             </Box>
