@@ -3,9 +3,11 @@ import { useParams } from "react-router-dom";
 import Box from '@mui/material/Box';
 import {Dog, DogCard} from '../components/dogCard'
 
-
-export default function Match() {
-    let {id} = useParams();
+export interface MatchProps{
+    id: string
+}
+export default function Match(props:MatchProps) {
+    let id = props.id;
     console.log('match dog id', id);
     const [matchDog, setMatchDog] = useState<Dog[]>([]);
 
