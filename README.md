@@ -12,5 +12,5 @@ This is a website to help dog-lovers search through a database of shelter dogs, 
 
 1. Download this repository
 1. run: `npm install`
-1. rum: `npm build`
+1. rum: `npm run build`
 
