@@ -10,6 +10,10 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import NavBar from '../components/navBar';
+import matchLogo from '../assets/matchLogo.webp'
+import Avatar from '@mui/material/Avatar';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 const PageContainer = styled.div`
 display: flex;
@@ -39,7 +43,7 @@ flex-direction: row;
 justify-content: space-between;
 height: 100px;
 width: 100%;
-margin-bottom: 50px;
+margin-bottom: 20px;
 align-items: center;
 
 `;
@@ -51,9 +55,13 @@ const modalStyle = {
     transform: 'translate(-50%, -50%)',
     width: 400,
     bgcolor: 'background.paper',
-    border: '2px solid #000',
     boxShadow: 24,
     p: 4,
+    borderRadius: '10%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
 };
 
 function Search() {
@@ -63,9 +71,10 @@ function Search() {
     const [breeds, setBreeds] = useState<string[]>([]);
     const [zipCode, setZip] = useState<string>('');
     const [sort, setSort] = useState<string>('breed:asc');
+    const [from, setFrom] = useState<number>(0);
+    const [size, setSize] = useState<number>(12);
     const [likedDogs, setLikedDogs] = useState<string[]>([]);
     const [matchedDog, setMatchedDog] = useState<Dog[]>([]);
-
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -76,6 +85,8 @@ function Search() {
                 'sort': sort,
                 'ageMin': age[0].toString(),
                 'ageMax': age[1].toString(),
+                'from': from.toString(),
+                'size': size.toString(),
             })
             for (let breed of breeds) {
                 params.append('breeds', breed);
@@ -159,7 +170,7 @@ function Search() {
         }
     };
 
-    useEffect(() => { dogSearch() }, [sort])
+    useEffect(() => { dogSearch() }, [sort, from])
 
     let cards = [];
     for (let i = 0; i < dogs.length; i++) {
@@ -192,6 +203,11 @@ function Search() {
                                 <Sort handleSearch={dogSearch} sort={sort} setSort={setSort} />
                             </Box>
                         </SortContainer>
+                        <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', paddingBottom: '20px' }}>
+                                <ArrowBackIosIcon sx={{ color: 'gray', paddingRight: '10px', cursor: 'pointer', "&:hover": { color: "orange" }  }} onClick={() => { setFrom(Math.max(from - size, 0)) }}/>
+                                <ArrowForwardIosIcon sx={{ color: 'gray', cursor: 'pointer', "&:hover": { color: "orange" }  }} onClick={() => { setFrom(from + size) }}/>
+
+                        </Box>
                         <Box sx={{ minWidth: 275 }}>
                             <Grid container spacing={2}>
                                 {cards}
@@ -206,11 +222,10 @@ function Search() {
                     aria-describedby="modal-modal-description"
                 >
                     <Box sx={modalStyle}>
-                        <Typography id="modal-modal-title" variant="h2" component="h2">
-                            Congrats!
-                        </Typography>
-                        <Typography id="modal-modal-title" variant="h6" component="h2">
-                            This is your matched dog!
+                        <Avatar alt="matchLogo" src={matchLogo} sx={{ width: 100, height: 100 }} />
+
+                        <Typography variant="h4" fontWeight='bold' gutterBottom color="primary" sx={{ paddingTop: '20px' }}>
+                            You found me!
                         </Typography>
                         <DogCard {...matchedDog[0]} />
                     </Box>

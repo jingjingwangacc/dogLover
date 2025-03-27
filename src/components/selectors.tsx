@@ -26,6 +26,9 @@ export default function Selectors(props: SelctorProps) {
         <>
             <Card sx={{ maxWidth: 500, borderRadius: '50px' }}>
                 <CardContent sx={{ padding: '50px', paddingBottom: '50px' }}>
+                         <Typography variant="h6" fontWeight='bold' color="gray" sx={{paddingBottom: '30px'}}>
+                            Find the best match!
+                        </Typography>
                     <Typography gutterBottom fontFamily='"Roboto", sans-serif;' fontWeight='bold' component="div" color='black'>
                         BREEDS
                     </Typography>
@@ -46,7 +49,7 @@ export default function Selectors(props: SelctorProps) {
                     <Box>
                         <AgeSelector age={props.age} setAge={props.setAge} />
                     </Box>
-                    <Button variant="contained" onClick={() => { props.handleSearch() }}>Search</Button>
+                    <Button variant="contained" sx={{color: 'white', borderRadius:'20px', width: '100px' }} onClick={() => { props.handleSearch() }}>Search</Button>
                     <div style={{ height: '26px' }} />
                 </CardContent>
             </Card>

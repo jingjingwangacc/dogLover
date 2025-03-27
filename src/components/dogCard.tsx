@@ -30,7 +30,7 @@ export function DogCard(props: Dog) {
                     }} />
                 }
             }
-            return (<FavoriteBorderIcon  onClick={() => {
+            return (<FavoriteBorderIcon sx={{"&:hover": { color: "orange" } }} onClick={() => {
                 let newLike = [...props.likedDogs];
                 newLike.push(props.id);
                 (props.setLikedDogs as Function)(newLike);
