@@ -9,20 +9,22 @@ import styled from "styled-components";
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import Match from './match'
+import NavBar from '../components/navBar';
 
 const PageContainer = styled.div`
 display: flex;
-padding: 50px;
 background-color:rgba(236, 236, 236, 0.3);
 width: 100vw;
 box-sizing: border-box;
+flex-direction: column;
 `;
 
 const MainContainer = styled.div`
 display:flex;
 flex-direction: row;
 width: 100%;
+padding: 50px;
+box-sizing: border-box;
 `;
 
 const ResultContainer = styled.div`
@@ -41,6 +43,7 @@ margin-bottom: 50px;
 align-items: center;
 
 `;
+
 const modalStyle = {
     position: 'absolute',
     top: '50%',
@@ -51,7 +54,7 @@ const modalStyle = {
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
-  };
+};
 
 function Search() {
     const navigate = useNavigate();
@@ -61,7 +64,8 @@ function Search() {
     const [zipCode, setZip] = useState<string>('');
     const [sort, setSort] = useState<string>('breed:asc');
     const [likedDogs, setLikedDogs] = useState<string[]>([]);
-    
+    const [matchedDog, setMatchedDog] = useState<Dog[]>([]);
+
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -124,8 +128,32 @@ function Search() {
             const data = await res.json();
             console.log('match dog:', data);
             // navigate('/match/' + data.match);
-            handleOpen();
+            getMatchDog(data.match);
 
+
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
+
+    const getMatchDog = async (id: string) => {
+        try {
+            const res = await fetch('https://frontend-take-home-service.fetch.com/dogs', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Access-Control-Allow-Origin': "*"
+                },
+                body: JSON.stringify([id]),
+                credentials: 'include',
+            });
+            const data = await res.json();
+            data[0].likedDogs = [];
+            data[0].setLikedDogs = null;
+            console.log('data', data);
+            setMatchedDog(data);
+
+            handleOpen();
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -151,8 +179,9 @@ function Search() {
     return (
         <>
             <PageContainer>
+                <NavBar />
                 <MainContainer>
-                    <Box sx={{ width: '30%', paddingRight: '60px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <Box sx={{ width: '30%', paddingRight: '50px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <Selectors handleSearch={dogSearch} age={age} setAge={setAge} breeds={breeds} setBreeds={setBreeds} zipCode={zipCode} setZip={setZip} />
                     </Box>
                     <ResultContainer>
@@ -177,12 +206,13 @@ function Search() {
                     aria-describedby="modal-modal-description"
                 >
                     <Box sx={modalStyle}>
+                        <Typography id="modal-modal-title" variant="h2" component="h2">
+                            Congrats!
+                        </Typography>
                         <Typography id="modal-modal-title" variant="h6" component="h2">
-                            Text in a modal
+                            This is your matched dog!
                         </Typography>
-                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                        </Typography>
+                        <DogCard {...matchedDog[0]} />
                     </Box>
                 </Modal>
             </PageContainer>

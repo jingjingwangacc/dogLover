@@ -14,7 +14,7 @@ export default function LocationSelector(props:ZipCodeProps) {
       noValidate
       autoComplete="off"
     >
-      <TextField id="zipCode" label="zipCode" variant="outlined" 
+      <TextField id="zipCode" label="Zip Code" variant="outlined" 
       value={props.zipCode}
       sx={{width: '100%' }}
       onChange={(event: React.ChangeEvent<HTMLInputElement>) => {

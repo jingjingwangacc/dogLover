@@ -17,21 +17,20 @@ export interface Dog {
     setLikedDogs: Function | null
 }
 export function DogCard(props: Dog) {
-    console.log('render ', props.id);
+    
     const favorite = () => {
-        console.log('calc fav');
         if (props.setLikedDogs !== null) {
             for (let i = 0; i < props.likedDogs.length; i++) {
                 if (props.likedDogs[i] === props.id) {
                     console.log('found', props.likedDogs[i]);
-                    return <FavoriteIcon onClick={() => {
+                    return <FavoriteIcon color='primary' onClick={() => {
                         let newLike = [...props.likedDogs];
                         newLike.splice(i, 1);
                         (props.setLikedDogs as Function)(newLike);
                     }} />
                 }
             }
-            return (<FavoriteBorderIcon onClick={() => {
+            return (<FavoriteBorderIcon  onClick={() => {
                 let newLike = [...props.likedDogs];
                 newLike.push(props.id);
                 (props.setLikedDogs as Function)(newLike);
