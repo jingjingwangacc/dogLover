@@ -56,7 +56,7 @@ export default function NavBar() {
                 <Typography variant="h5" fontWeight='bold' color='white'>
                     DogLover
                 </Typography>
-                <Avatar alt="account1" src={sampleAvatar} sx={{ width: 50, height: 50 }} onClick={handleClick} />
+                <Avatar alt="account1" src={sampleAvatar} sx={{ width: 50, height: 50, cursor: 'pointer' }} onClick={handleClick} />
                 <Popover
                     id={id}
                     open={open}
