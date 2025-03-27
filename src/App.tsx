@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/login";
 import Search from "./pages/search";
 import './App.css'
@@ -10,13 +10,13 @@ function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-      <Router>
-        <Routes> 
-          <Route path='/' element={<Login />} />
-          <Route path='/search' element={<Search />} /> 
-        </Routes>
+        <Router>
+          <Routes>
+            <Route path='/' element={<Login />} />
+            <Route path='/search' element={<Search />} />
+          </Routes>
 
-      </Router>
+        </Router>
       </ThemeProvider>
     </>
   );

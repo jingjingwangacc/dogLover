@@ -17,7 +17,7 @@ export interface Dog {
     setLikedDogs: Function | null
 }
 export function DogCard(props: Dog) {
-    
+
     const favorite = () => {
         if (props.setLikedDogs !== null) {
             for (let i = 0; i < props.likedDogs.length; i++) {
@@ -30,7 +30,7 @@ export function DogCard(props: Dog) {
                     }} />
                 }
             }
-            return (<FavoriteBorderIcon sx={{"&:hover": { color: "orange" } }} onClick={() => {
+            return (<FavoriteBorderIcon sx={{ "&:hover": { color: "orange" } }} onClick={() => {
                 let newLike = [...props.likedDogs];
                 newLike.push(props.id);
                 (props.setLikedDogs as Function)(newLike);
@@ -65,6 +65,5 @@ export function DogCard(props: Dog) {
             </CardActionArea>
         </Card>
     );
-
 }
 

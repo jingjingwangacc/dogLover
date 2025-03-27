@@ -1,9 +1,5 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useNavigate } from "react-router-dom";
-import Box from '@mui/material/Box';
-import { Dog, DogCard } from '../components/dogCard'
-import Selectors from '../components/selectors'
-import Sort from '../components/sort'
 import Button from '@mui/material/Button';
 import styled from "styled-components";
 import Typography from '@mui/material/Typography';

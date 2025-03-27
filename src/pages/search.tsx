@@ -126,7 +126,6 @@ function Search() {
 
     const matchDog = async () => {
         try {
-            console.log('liked dog', likedDogs);
             const res = await fetch('https://frontend-take-home-service.fetch.com/dogs/match', {
                 method: 'POST',
                 headers: {
@@ -137,11 +136,7 @@ function Search() {
                 credentials: 'include',
             });
             const data = await res.json();
-            console.log('match dog:', data);
-            // navigate('/match/' + data.match);
             getMatchDog(data.match);
-
-
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -161,9 +156,7 @@ function Search() {
             const data = await res.json();
             data[0].likedDogs = [];
             data[0].setLikedDogs = null;
-            console.log('data', data);
             setMatchedDog(data);
-
             handleOpen();
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -204,9 +197,8 @@ function Search() {
                             </Box>
                         </SortContainer>
                         <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', paddingBottom: '20px' }}>
-                                <ArrowBackIosIcon sx={{ color: 'gray', paddingRight: '10px', cursor: 'pointer', "&:hover": { color: "orange" }  }} onClick={() => { setFrom(Math.max(from - size, 0)) }}/>
-                                <ArrowForwardIosIcon sx={{ color: 'gray', cursor: 'pointer', "&:hover": { color: "orange" }  }} onClick={() => { setFrom(from + size) }}/>
-
+                            <ArrowBackIosIcon sx={{ color: 'gray', paddingRight: '10px', cursor: 'pointer', "&:hover": { color: "orange" } }} onClick={() => { setFrom(Math.max(from - size, 0)) }} />
+                            <ArrowForwardIosIcon sx={{ color: 'gray', cursor: 'pointer', "&:hover": { color: "orange" } }} onClick={() => { setFrom(from + size) }} />
                         </Box>
                         <Box sx={{ minWidth: 275 }}>
                             <Grid container spacing={2}>
@@ -231,7 +223,6 @@ function Search() {
                     </Box>
                 </Modal>
             </PageContainer>
-
         </>
     )
 

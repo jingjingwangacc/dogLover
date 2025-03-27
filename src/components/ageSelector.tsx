@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 
@@ -19,7 +18,7 @@ export default function AgeSelector(props: AgeProps) {
 
     return (
         <Box sx={{ width: 200, padding: '20px' }}>
-            
+
             <Slider
                 getAriaLabel={() => 'age range'}
                 value={props.age}
