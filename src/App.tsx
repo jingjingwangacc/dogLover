@@ -6,11 +6,12 @@ import theme from './theme/theme';
 import { ThemeProvider } from '@mui/material/styles';
 
 function App() {
+  const baseName = '/doglover';
 
   return (
     <>
       <ThemeProvider theme={theme}>
-        <Router>
+        <Router basename={baseName}>
           <Routes>
             <Route path='/' element={<Login />} />
             <Route path='/search' element={<Search />} />
