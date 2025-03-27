@@ -37,7 +37,7 @@ export default function NavBar() {
                 'Access-Control-Allow-Origin': "*"
             },
             credentials: 'include',
-        }).then(data => {
+        }).then(_data => {
             navigate('/')
         })
             .catch(err => {

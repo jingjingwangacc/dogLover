@@ -12,7 +12,7 @@ export interface AgeProps {
 }
 export default function AgeSelector(props: AgeProps) {
 
-    const handleChange = (event: Event, newValue: number | number[]) => {
+    const handleChange = (_event: Event, newValue: number | number[]) => {
         props.setAge(newValue as number[]);
     };
 

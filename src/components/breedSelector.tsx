@@ -33,7 +33,7 @@ export default function BreedSelector(props: BreedsProps) {
                 getOptionLabel={(option) => option}
                 defaultValue={[]}
                 filterSelectedOptions
-                onChange={(event: any, newValue: string[]) => {
+                onChange={(_event: any, newValue: string[]) => {
                     props.setBreeds(newValue);
                 }}
                 renderInput={(params) => (

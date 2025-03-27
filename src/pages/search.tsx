@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from "react-router-dom";
 import Box from '@mui/material/Box';
 import { Dog, DogCard } from '../components/dogCard'
 import Selectors from '../components/selectors'
@@ -71,7 +70,7 @@ function Search() {
     const [zipCode, setZip] = useState<string>('');
     const [sort, setSort] = useState<string>('breed:asc');
     const [from, setFrom] = useState<number>(0);
-    const [size, setSize] = useState<number>(12);
+    const [size, _setSize] = useState<number>(12);
     const [likedDogs, setLikedDogs] = useState<string[]>([]);
     const [matchedDog, setMatchedDog] = useState<Dog[]>([]);
     const [open, setOpen] = useState(false);
